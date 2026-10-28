@@ -1,55 +1,23 @@
 ---
 import Base from '../layouts/Base.astro';
-import PostCard from '../components/PostCard.astro';
+import MetaCell from '../components/MetaCell.astro';
+import PostGrid from '../components/PostGrid.astro';
 import Subscribe from '../components/Subscribe.astro';
-import { AUTHOR, SITE_TITLE, SITE_TAGLINE } from '../consts';
-import { getPosts, url } from '../lib';
+import { SITE_TAGLINE } from '../consts';
+import { getPosts, pad } from '../lib';
 
 const posts = await getPosts();
-const [featured, ...rest] = posts;
 ---
 
 <Base>
-  <div class="container">
-    <section class="hero">
-      <div class="avatar" aria-hidden="true">{AUTHOR.charAt(0)}</div>
-      <h1>{SITE_TITLE}</h1>
-      <p>{SITE_TAGLINE}</p>
-    </section>
-
-    <Subscribe />
-
-    {featured && (
-      <>
-        <h2 class="section-title">Latest</h2>
-        <PostCard post={featured} />
-      </>
-    )}
-    {rest.length > 0 && (
-      <>
-        <h2 class="section-title">More posts</h2>
-        {rest.slice(0, 9).map((post) => <PostCard post={post} />)}
-        {rest.length > 9 && <p><a href={url('archive/')}>See all posts →</a></p>}
-      </>
-    )}
-    {posts.length === 0 && <p class="meta">No posts yet.</p>}
-  </div>
+  <section class="grid3">
+    <div class="cell big span2">
+      <span class="num cond">{pad(posts.length)}</span>
+      <p>{SITE_TAGLINE} <b>{posts.length} {posts.length === 1 ? 'post' : 'posts'} so far.</b></p>
+    </div>
+    <MetaCell date={posts[0]?.data.date}>
+      <Subscribe />
+    </MetaCell>
+  </section>
+  {posts.length > 0 ? <PostGrid posts={posts} all={posts} /> : <p class="cell">No posts yet.</p>}
 </Base>
-
-<style>
-  .hero { text-align: center; padding: 56px 0 8px; }
-  .avatar {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--accent-text);
-    display: grid;
-    place-items: center;
-    font-size: 32px;
-    font-weight: 700;
-  }
-  h1 { font-size: 36px; line-height: 1.2; margin: 0 0 8px; }
-  .hero p { margin: 0; color: var(--muted); font-family: var(--serif); font-size: 20px; }
-</style>

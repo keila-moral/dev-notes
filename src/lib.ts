@@ -26,3 +26,17 @@ export function readingTime(body: string | undefined): string {
 export function slugifyTag(tag: string): string {
   return tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
+
+/** Two-digit issue number for a post, counting from the oldest (01). */
+export function postNumber(post: Post, posts: Post[]): string {
+  return pad(posts.length - posts.findIndex((p) => p.id === post.id));
+}
+
+export function pad(n: number): string {
+  return String(n).padStart(2, '0');
+}
+
+/** ISO date (YYYY-MM-DD), used for the monospace date columns. */
+export function isoDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}

@@ -1,23 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+import MetaCell from '../components/MetaCell.astro';
 import Subscribe from '../components/Subscribe.astro';
 import { AUTHOR, GITHUB_URL } from '../consts';
 ---
 
 <Base title="About">
-  <div class="container">
-    <h1>About</h1>
-    <div class="prose">
-      <p>
-        Hi, I'm {AUTHOR}. I write about software engineering, research data tooling and the lessons
-        I pick up along the way.
-      </p>
-      <p>You can find my code on <a href={GITHUB_URL}>GitHub</a>.</p>
-    </div>
-    <Subscribe />
+  <section class="grid3">
+    <div class="cell big span2"><h1 class="cond">About</h1></div>
+    <MetaCell><Subscribe /></MetaCell>
+  </section>
+  <div class="prose">
+    <p>
+      Hi, I'm {AUTHOR}. I write about software engineering, research data tooling and the lessons I
+      pick up along the way.
+    </p>
+    <p>You can find my code on <a href={GITHUB_URL}>GitHub</a>.</p>
   </div>
 </Base>
-
-<style>
-  h1 { margin: 48px 0 24px; }
-</style>

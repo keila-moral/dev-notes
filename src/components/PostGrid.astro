@@ -1,0 +1,19 @@
+---
+import PostCell from './PostCell.astro';
+import { postNumber, type Post } from '../lib';
+
+interface Props {
+  posts: Post[];
+  /** All published posts, so numbers stay the same on filtered pages. */
+  all: Post[];
+}
+
+const { posts, all } = Astro.props;
+// Pad the last row so the ruled grid stays closed.
+const fillers = (3 - (posts.length % 3)) % 3;
+---
+
+<section class="grid3">
+  {posts.map((post) => <PostCell post={post} number={postNumber(post, all)} />)}
+  {Array.from({ length: fillers }, () => <div class="filler" aria-hidden="true" />)}
+</section>

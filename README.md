@@ -1,6 +1,6 @@
-# Keila Writes Code
+# Stack Sprint
 
-A Substack-style software dev blog built with [Astro](https://astro.build) and hosted on GitHub Pages.
+A software dev blog with a Swiss poster-grid design, built with [Astro](https://astro.build) and hosted on GitHub Pages.
 
 ## Writing
 
@@ -16,7 +16,7 @@ publish, then push to `main`; the GitHub Action builds and deploys the site.
 ## Customising
 
 - **Name, tagline, links:** `src/consts.ts`
-- **Colours and fonts:** `src/styles/global.css` (the `:root` variables)
+- **Colours, fonts and grid:** `src/styles/global.css` (the `:root` variables at the top)
 - **About page:** `src/pages/about.astro`
 
 ## Email subscriptions

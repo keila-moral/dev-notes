@@ -1,8 +1,9 @@
 ---
 import Base from './Base.astro';
+import MetaCell from '../components/MetaCell.astro';
 import Subscribe from '../components/Subscribe.astro';
 import { AUTHOR } from '../consts';
-import { formatDate, readingTime, slugifyTag, url, type Post } from '../lib';
+import { getPosts, isoDate, postNumber, readingTime, slugifyTag, url, type Post } from '../lib';
 
 interface Props {
   post: Post;
@@ -10,59 +11,60 @@ interface Props {
 
 const { post } = Astro.props;
 const { title, subtitle, date, updated, tags } = post.data;
+const all = await getPosts();
+const i = all.findIndex((p) => p.id === post.id);
+const newer = all[i - 1];
+const older = all[i + 1];
 ---
 
 <Base title={title} description={subtitle}>
-  <article class="container">
-    <header>
-      <h1>{title}</h1>
-      {subtitle && <p class="subtitle">{subtitle}</p>}
-      <div class="byline">
-        <div class="avatar" aria-hidden="true">{AUTHOR.charAt(0)}</div>
-        <div>
-          <div class="author">{AUTHOR}</div>
-          <div class="meta">
-            <time datetime={date.toISOString()}>{formatDate(date)}</time> · {readingTime(post.body)}
-            {updated && <> · updated {formatDate(updated)}</>}
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <div class="prose">
-      <slot />
+  <header class="grid3">
+    <div class="cell span2" style="display:flex;flex-direction:column;justify-content:flex-end;gap:12px">
+      <span class="label">No. {postNumber(post, all)}</span>
+      <h1 class="cond" style="font-size:clamp(42px,6.5vw,88px);line-height:.9;margin:0;text-wrap:balance">{title}</h1>
+      {subtitle && <p style="margin:0;font-size:19px;max-width:40ch">{subtitle}</p>}
     </div>
-
-    {tags.length > 0 && (
-      <div class="tags">
-        {tags.map((tag) => <a class="tag" href={url(`tags/${slugifyTag(tag)}/`)}>#{tag}</a>)}
+    <MetaCell date={date}>
+      <div>
+        <div>BY {AUTHOR.toUpperCase()}</div>
+        <div><time datetime={date.toISOString()}>{isoDate(date)}</time> · {readingTime(post.body)}</div>
+        {updated && <div>UPDATED {isoDate(updated)}</div>}
+        {tags.length > 0 && (
+          <div class="tags">
+            {tags.map((tag) => <a href={url(`tags/${slugifyTag(tag)}/`)}>#{tag}</a>)}
+          </div>
+        )}
       </div>
-    )}
+    </MetaCell>
+  </header>
 
-    <Subscribe />
+  <article class="prose">
+    <slot />
   </article>
-</Base>
 
-<style>
-  header { padding: 48px 0 24px; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
-  h1 { font-size: 40px; line-height: 1.15; margin: 0 0 12px; letter-spacing: -0.01em; }
-  .subtitle { font-family: var(--serif); font-size: 22px; color: var(--muted); margin: 0 0 24px; line-height: 1.4; }
-  .byline { display: flex; align-items: center; gap: 12px; }
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--accent-text);
-    display: grid;
-    place-items: center;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .author { font-weight: 600; font-size: 15px; }
-  .tags { margin-top: 32px; }
-  @media (max-width: 480px) {
-    h1 { font-size: 32px; }
-    .subtitle { font-size: 19px; }
-  }
-</style>
+  <section class="cell band">
+    <b class="cond">Get the next one</b>
+    <Subscribe button="Join" />
+  </section>
+
+  {(older || newer) && (
+    <nav class="grid3" aria-label="More posts">
+      {older ? (
+        <a class="cell post-cell" href={url(`posts/${older.id}/`)}>
+          <span class="label">← Previous</span>
+          <h2>{older.data.title}</h2>
+        </a>
+      ) : <div class="cell" />}
+      <a class="cell post-cell" href={url('archive/')}>
+        <span class="label">All posts</span>
+        <h2>Archive</h2>
+      </a>
+      {newer ? (
+        <a class="cell post-cell" href={url(`posts/${newer.id}/`)}>
+          <span class="label">Next →</span>
+          <h2>{newer.data.title}</h2>
+        </a>
+      ) : <div class="cell" />}
+    </nav>
+  )}
+</Base>
