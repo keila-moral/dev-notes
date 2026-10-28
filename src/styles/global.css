@@ -7,7 +7,7 @@
   --grey: #5c5c5c;
   --code-bg: #f4f4f2;
   --rule: 2px solid var(--ink);
-  --spine: 90px;
+  --spine: 118px;
   --cond: 'Archivo', 'Arial Narrow', sans-serif;
   --sans: 'Archivo', system-ui, sans-serif;
   --mono: 'Space Mono', ui-monospace, Menlo, monospace;
@@ -57,7 +57,7 @@ a:hover { color: var(--red); }
 .spine a {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 64px;
+  font-size: 85px;
   line-height: 0.9;
   white-space: nowrap;
   text-decoration: none;
@@ -263,9 +263,9 @@ a.row:hover { background: var(--red); color: var(--paper); }
 }
 
 @media (max-width: 760px) {
-  :root { --spine: 54px; }
+  :root { --spine: 70px; }
   body { font-size: 24px; }
-  .spine a { font-size: 40px; }
+  .spine a { font-size: 53px; }
   .grid3 { grid-template-columns: minmax(0, 1fr); }
   .span2, .span3 { grid-column: auto; }
   .cell { border-left: 0; padding: 16px; }
