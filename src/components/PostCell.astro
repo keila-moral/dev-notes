@@ -1,0 +1,18 @@
+---
+import type { Post } from '../lib';
+import { isoDate, readingTime, url } from '../lib';
+
+interface Props {
+  post: Post;
+  number: string;
+}
+
+const { post, number } = Astro.props;
+---
+
+<a class="cell post-cell" href={url(`posts/${post.id}/`)}>
+  <span class="n cond">{number}</span>
+  <h2>{post.data.title}{post.data.draft && ' (draft)'}</h2>
+  {post.data.subtitle && <p>{post.data.subtitle}</p>}
+  <span class="d">{isoDate(post.data.date)} · {readingTime(post.body).replace(' read', '')}</span>
+</a>

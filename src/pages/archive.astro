@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import { getPosts, formatDate, slugifyTag, url } from '../lib';
+import MetaCell from '../components/MetaCell.astro';
+import { getPosts, isoDate, postNumber, readingTime, slugifyTag, url } from '../lib';
 
 const posts = await getPosts();
 const years = Map.groupBy(posts, (post) => post.data.date.getFullYear());
@@ -8,33 +9,31 @@ const tags = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 ---
 
 <Base title="Archive">
-  <div class="container">
-    <h1>Archive</h1>
-    {tags.length > 0 && (
-      <div class="tags">
-        {tags.map((tag) => <a class="tag" href={url(`tags/${slugifyTag(tag)}/`)}>#{tag}</a>)}
-      </div>
-    )}
-    {[...years].map(([year, items]) => (
-      <section>
-        <h2 class="section-title">{year}</h2>
-        <ul>
-          {items.map((post) => (
-            <li>
-              <a href={url(`posts/${post.id}/`)}>{post.data.title}</a>
-              <span class="meta">{formatDate(post.data.date)}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-    ))}
-  </div>
+  <section class="grid3">
+    <div class="cell big span2"><h1 class="cond">Archive</h1></div>
+    <MetaCell date={posts[0]?.data.date}>
+      {tags.length > 0 && (
+        <div class="tags">
+          {tags.map((tag) => <a href={url(`tags/${slugifyTag(tag)}/`)}>#{tag}</a>)}
+        </div>
+      )}
+    </MetaCell>
+  </section>
+  <div class="row head" aria-hidden="true"><span>No.</span><span>Title</span><span>Date</span><span>Length</span></div>
+  {[...years].map(([year, items]) => (
+    <section>
+      <h2 class="year cond">{year}</h2>
+      {items.map((post) => (
+        <a class="row" href={url(`posts/${post.id}/`)}>
+          <span class="n cond">{postNumber(post, posts)}</span>
+          <div>
+            <h2>{post.data.title}</h2>
+            {post.data.subtitle && <p>{post.data.subtitle}</p>}
+          </div>
+          <span class="d">{isoDate(post.data.date)}</span>
+          <span class="d">{readingTime(post.body).replace(' read', '')}</span>
+        </a>
+      ))}
+    </section>
+  ))}
 </Base>
-
-<style>
-  h1 { margin: 48px 0 16px; }
-  ul { list-style: none; padding: 0; margin: 0; }
-  li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--border); }
-  li a { text-decoration: none; font-weight: 600; }
-  li .meta { white-space: nowrap; }
-</style>

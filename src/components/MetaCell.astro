@@ -1,0 +1,26 @@
+---
+import { url } from '../lib';
+
+interface Props {
+  /** Date shown as the issue line, usually the newest post's date. */
+  date?: Date;
+}
+
+const { date = new Date() } = Astro.props;
+const issue = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+const vol = String(date.getFullYear() - 2025).padStart(2, '0');
+---
+
+<div class="cell meta-cell">
+  <div>
+    <div>VOL. {vol}</div>
+    <div>{issue}</div>
+    <nav aria-label="Main">
+      <a href={url('/')}>Home</a>
+      <a href={url('archive/')}>Archive</a>
+      <a href={url('about/')}>About</a>
+      <a href={url('rss.xml')}>RSS</a>
+    </nav>
+  </div>
+  <slot />
+</div>
