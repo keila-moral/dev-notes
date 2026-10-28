@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { AUTHOR, GITHUB_URL } from '../consts';
+---
+
+<Base title="About">
+  <div class="container">
+    <h1>About</h1>
+    <div class="prose">
+      <p>
+        Hi, I'm {AUTHOR}. I write about software engineering, research data tooling and the lessons
+        I pick up along the way.
+      </p>
+      <p>You can find my code on <a href={GITHUB_URL}>GitHub</a>.</p>
+    </div>
+    <Subscribe />
+  </div>
+</Base>
+
+<style>
+  h1 { margin: 48px 0 24px; }
+</style>

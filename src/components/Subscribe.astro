@@ -1,0 +1,56 @@
+---
+import { BUTTONDOWN_USERNAME, SITE_TITLE } from '../consts';
+import { url } from '../lib';
+---
+
+<section id="subscribe" class="subscribe">
+  <h3>Subscribe to {SITE_TITLE}</h3>
+  {
+    BUTTONDOWN_USERNAME ? (
+      <>
+        <p>New posts straight to your inbox. No spam, unsubscribe anytime.</p>
+        <form
+          action={`https://buttondown.com/api/emails/embed-subscribe/${BUTTONDOWN_USERNAME}`}
+          method="post"
+          target="_blank"
+        >
+          <input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required />
+          <button class="btn" type="submit">Subscribe</button>
+        </form>
+      </>
+    ) : (
+      <p>
+        Follow along via <a href={url('rss.xml')}>RSS</a>. Email subscriptions are coming soon.
+      </p>
+    )
+  }
+</section>
+
+<style>
+  .subscribe {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 24px;
+    text-align: center;
+    margin: 48px 0;
+  }
+  h3 { margin: 0 0 6px; font-size: 20px; }
+  p { margin: 0 0 16px; color: var(--muted); }
+  p:last-child { margin-bottom: 0; }
+  form { display: flex; gap: 8px; max-width: 440px; margin: 0 auto; }
+  input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    color: var(--text);
+    font: 15px var(--sans);
+  }
+  input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  @media (max-width: 420px) {
+    form { flex-direction: column; }
+  }
+</style>
