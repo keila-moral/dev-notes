@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import MetaCell from '../components/MetaCell.astro';
+import Subscribe from '../components/Subscribe.astro';
+import { BUTTONDOWN_USERNAME, SITE_TITLE } from '../consts';
+import { url } from '../lib';
+
+const feed = new URL(url('rss.xml'), Astro.site).href;
+const readers = [
+  ['Feedly', `https://feedly.com/i/subscription/feed/${encodeURIComponent(feed)}`],
+  ['Inoreader', `https://www.inoreader.com/?add_feed=${encodeURIComponent(feed)}`],
+  ['NewsBlur', `https://www.newsblur.com/?url=${encodeURIComponent(feed)}`],
+];
+---
+
+<Base title="Subscribe" description={`Get new ${SITE_TITLE} posts by email or RSS.`}>
+  <section class="grid3">
+    <div class="cell big span2"><h1 class="cond">Subscribe</h1></div>
+    <MetaCell />
+  </section>
+
+  <section class="grid3">
+    <div class="cell sub-option">
+      <span class="label">01 · Email</span>
+      {BUTTONDOWN_USERNAME ? (
+        <>
+          <p>Every new post in your inbox. No spam, unsubscribe anytime.</p>
+          <Subscribe />
+        </>
+      ) : (
+        <p>The email newsletter is coming soon. Until then, follow along with a feed reader.</p>
+      )}
+    </div>
+
+    <div class="cell sub-option">
+      <span class="label">02 · Feed reader</span>
+      <p>Follow in one click:</p>
+      <div class="reader-links">
+        {readers.map(([name, href]) => <a class="btn" href={href} target="_blank" rel="noopener">{name}</a>)}
+      </div>
+    </div>
+
+    <div class="cell sub-option">
+      <span class="label">03 · Any RSS app</span>
+      <p>Paste this address into your reader:</p>
+      <div class="feed-url">
+        <input id="feed-url" type="text" value={feed} readonly aria-label="RSS feed address" />
+        <button type="button" class="btn" id="copy-feed">Copy</button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sub-option { display: flex; flex-direction: column; gap: 14px; }
+  .sub-option p { margin: 0; }
+  .reader-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .feed-url { display: flex; gap: 6px; }
+  .feed-url input {
+    flex: 1;
+    min-width: 0;
+    border: var(--rule);
+    border-radius: 0;
+    padding: 7px 9px;
+    font: 15px var(--mono);
+    background: var(--code-bg);
+    color: var(--ink);
+  }
+</style>
+
+<script>
+  const input = document.getElementById('feed-url') as HTMLInputElement;
+  const button = document.getElementById('copy-feed') as HTMLButtonElement;
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(input.value);
+      button.textContent = 'Copied';
+    } catch {
+      input.select();
+      button.textContent = 'Press Ctrl+C';
+    }
+    setTimeout(() => (button.textContent = 'Copy'), 2000);
+  });
+</script>

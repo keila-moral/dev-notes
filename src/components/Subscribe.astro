@@ -21,7 +21,7 @@ const { button = 'Subscribe' } = Astro.props;
         <button type="submit">{button}</button>
       </form>
     ) : (
-      <a class="btn" href={url('rss.xml')}>Follow via RSS</a>
+      <a class="btn" href={url('subscribe/')}>{button} →</a>
     )
   }
 </div>
