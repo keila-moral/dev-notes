@@ -6,7 +6,7 @@ import { AUTHOR_FULL_NAME, GITHUB_URL, LINKTREE_URL, SITE_TITLE } from '../const
 import { url } from '../lib';
 
 const facts = [
-  ['Now', 'Research Fellow, scientific software for materials science', 'Humboldt-Universität zu Berlin · FAIRmat'],
+  ['Now', 'Research software engineer, materials science', 'Humboldt-Universität zu Berlin · FAIRmat'],
   ['Before', 'Software for the CMS Collaboration, ~4 years', 'CERN'],
   ['PhD', 'Particle physics', ''],
   ['MSc', 'Theoretical physics', 'University of Edinburgh'],
@@ -22,7 +22,7 @@ const facts = [
     <div class="cell big span2"><h1 class="cond">About</h1></div>
     <MetaCell>
       <div class="about-links">
-        <a class="btn" href={LINKTREE_URL}>All my links →</a>
+        <a class="btn" href={LINKTREE_URL}>All links →</a>
         <a class="btn" href={GITHUB_URL}>GitHub →</a>
       </div>
     </MetaCell>
@@ -31,24 +31,24 @@ const facts = [
   <section class="grid3">
     <div class="cell span2 prose about-bio">
       <p class="lede">
-        Hi, I'm <strong>{AUTHOR_FULL_NAME}</strong>. I build software that turns experimental data
-        into results you can trust and reproduce.
+        <strong>{AUTHOR_FULL_NAME}</strong> builds software that turns experimental data into
+        results you can trust and reproduce.
       </p>
       <p>
-        I'm a Research Fellow in scientific software development for materials science at
-        Humboldt-Universität zu Berlin, where I work as a software engineer in the{' '}
-        <a href="https://www.fairmat-nfdi.eu/">FAIRmat</a> collaboration. My main job is the
+        She is a research software engineer for materials science at Humboldt-Universität zu
+        Berlin, working in the{' '}
+        <a href="https://www.fairmat-nfdi.eu/">FAIRmat</a> collaboration. Her main focus is the
         architectural redesign of{' '}
         <a href="https://github.com/FAIRmat-NFDI/pynxtools">pynxtools</a>,
         an open-source library that converts experimental data into the NeXus format.
       </p>
       <p>
-        Before that I spent nearly four years writing software for the CMS Collaboration at CERN:
+        Before that she spent nearly four years writing software for the CMS Collaboration at CERN:
         machine learning pipelines, data analysis frameworks for experimental particle physics, and
         statistical modelling, in particular the Combine statistical tool.
       </p>
       <p>
-        My work centres on the engineering practices that keep scientific and machine learning
+        Her work centres on the engineering practices that keep scientific and machine learning
         results reproducible. That's also what {SITE_TITLE} is about: notes on Python, research data,
         testing, Git and the occasional debugging story, written for people who build software for
         science.
