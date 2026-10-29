@@ -2,19 +2,96 @@
 import Base from '../layouts/Base.astro';
 import MetaCell from '../components/MetaCell.astro';
 import Subscribe from '../components/Subscribe.astro';
-import { AUTHOR, GITHUB_URL } from '../consts';
+import { AUTHOR_FULL_NAME, GITHUB_URL, LINKTREE_URL, SITE_TITLE } from '../consts';
+import { url } from '../lib';
+
+const facts = [
+  ['Now', 'Research software engineer, materials science', 'Humboldt-Universität zu Berlin · FAIRmat'],
+  ['Before', 'Software for the CMS Collaboration, ~4 years', 'CERN'],
+  ['PhD', 'Particle physics', ''],
+  ['MSc', 'Theoretical physics', 'University of Edinburgh'],
+  ['BSc', 'Physics', 'Universidad Complutense de Madrid'],
+];
 ---
 
-<Base title="About">
+<Base
+  title="About"
+  description={`${AUTHOR_FULL_NAME} is a research software engineer working on reproducible scientific and machine learning software.`}
+>
   <section class="grid3">
     <div class="cell big span2"><h1 class="cond">About</h1></div>
-    <MetaCell><Subscribe /></MetaCell>
+    <MetaCell>
+      <div class="about-links">
+        <a class="btn" href={LINKTREE_URL}>All links →</a>
+        <a class="btn" href={GITHUB_URL}>GitHub →</a>
+      </div>
+    </MetaCell>
   </section>
-  <div class="prose">
-    <p>
-      Hi, I'm {AUTHOR}. I write about software engineering, research data tooling and the lessons I
-      pick up along the way.
-    </p>
-    <p>You can find my code on <a href={GITHUB_URL}>GitHub</a>.</p>
-  </div>
+
+  <section class="grid3">
+    <div class="cell span2 prose about-bio">
+      <p class="lede">
+        <strong>{AUTHOR_FULL_NAME}</strong> builds software that turns experimental data into
+        results you can trust and reproduce.
+      </p>
+      <p>
+        She is a research software engineer for materials science at Humboldt-Universität zu
+        Berlin, working in the{' '}
+        <a href="https://www.fairmat-nfdi.eu/">FAIRmat</a> collaboration. Her main focus is the
+        architectural redesign of{' '}
+        <a href="https://github.com/FAIRmat-NFDI/pynxtools">pynxtools</a>,
+        an open-source library that converts experimental data into the NeXus format.
+      </p>
+      <p>
+        Before that she spent nearly four years writing software for the CMS Collaboration at CERN:
+        machine learning pipelines, data analysis frameworks for experimental particle physics, and
+        statistical modelling, in particular the Combine statistical tool.
+      </p>
+      <p>
+        Her work centres on the engineering practices that keep scientific and machine learning
+        results reproducible. {SITE_TITLE} is where she writes about it: hands-on notes on Python,
+        software architecture, testing, Git, data pipelines and the occasional debugging war story.
+        Practical lessons for any engineer who wants code that's reliable, maintainable and easy to
+        trust.
+      </p>
+    </div>
+
+    <div class="cell facts">
+      <span class="label">At a glance</span>
+      <dl>
+        {facts.map(([k, v, where]) => (
+          <div>
+            <dt class="cond">{k}</dt>
+            <dd>
+              {v}
+              {where && <span>{where}</span>}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="cell band">
+    <b class="cond">Follow along</b>
+    <Subscribe />
+    <a href={url('archive/')}>Read the archive →</a>
+  </section>
 </Base>
+
+<style>
+  .about-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .about-bio { padding: 22px; max-width: none; }
+  .about-bio .lede { font-size: 1.15em; font-weight: 700; }
+  .facts { display: flex; flex-direction: column; gap: 14px; }
+  .facts dl { margin: 0; display: grid; gap: 14px; }
+  .facts dl > div { border-top: var(--rule); padding-top: 10px; }
+  .facts dt { font-size: 32px; line-height: 1; color: var(--red); }
+  .facts dd { margin: 4px 0 0; font-weight: 700; }
+  .facts dd span { display: block; font: 400 0.8em var(--mono); }
+  .grid3 > .facts { border-left: var(--rule); }
+  @media (max-width: 760px) {
+    .grid3 > .facts { border-left: 0; }
+    .about-bio { padding: 16px; }
+  }
+</style>
