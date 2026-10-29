@@ -2,7 +2,7 @@
 export const SITE_TITLE = 'Stack Sprint';
 export const SITE_TAGLINE = 'Notes on software, research tooling and the craft of building things.';
 export const AUTHOR = 'Keila';
-export const AUTHOR_FULL_NAME = 'Keila Moral Figueroa';
+export const AUTHOR_FULL_NAME = 'Keila Moral';
 export const GITHUB_URL = 'https://github.com/keila-moral';
 export const LINKTREE_URL = 'https://linktr.ee/kmoralfig';
 
