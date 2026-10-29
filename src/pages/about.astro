@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import MetaCell from '../components/MetaCell.astro';
 import Subscribe from '../components/Subscribe.astro';
-import { AUTHOR_FULL_NAME, GITHUB_URL, LINKTREE_URL, SITE_TITLE } from '../consts';
+import { AUTHOR_FULL_NAME, GITHUB_URL, LINKEDIN_URL, LINKTREE_URL, SITE_TITLE } from '../consts';
 import { url } from '../lib';
 
 const facts = [
@@ -23,6 +23,7 @@ const facts = [
     <MetaCell>
       <div class="about-links">
         <a class="btn" href={LINKTREE_URL}>All links →</a>
+        {LINKEDIN_URL && <a class="btn" href={LINKEDIN_URL}>LinkedIn →</a>}
         <a class="btn" href={GITHUB_URL}>GitHub →</a>
       </div>
     </MetaCell>
