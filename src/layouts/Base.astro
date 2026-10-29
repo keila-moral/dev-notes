@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { AUTHOR, GITHUB_URL, SITE_TITLE, SITE_TAGLINE } from '../consts';
+import { AUTHOR, GITHUB_URL, LINKTREE_URL, SITE_TITLE, SITE_TAGLINE } from '../consts';
 import { url } from '../lib';
 
 interface Props {
@@ -47,7 +47,7 @@ const year = new Date().getFullYear();
         <footer class="cell foot">
           <span>© {year} {AUTHOR}</span>
           <span>
-            <a href={url('rss.xml')}>RSS</a> · <a href={GITHUB_URL}>GitHub</a>
+            <a href={url('rss.xml')}>RSS</a> · <a href={GITHUB_URL}>GitHub</a> · <a href={LINKTREE_URL}>Links</a>
           </span>
         </footer>
       </div>
